@@ -126,8 +126,8 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     minute=localtime().tm_min
     microsecond=localtime().tm_sec
     
-    today = datetime.date(datetime(year=year, month=month, day=day,hour=hour,minute=minute,microsecond=microsecond))
-    #today = datetime.date(datetime(year=year, month=month, day=day))
+    #today = datetime.date(datetime(year=year, month=month, day=day,hour=hour,minute=minute,microsecond=microsecond))
+    today = datetime.date(datetime(year=year, month=month, day=day))
     week = week_list[today.isoweekday() % 7]
     # 获取在一起的日子的日期格式
     love_year = int(config["love_date"].split("-")[0])
@@ -148,7 +148,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         "topcolor": "#FF0000",
         "data": {
             "date": {
-                "value": "{} {}".format(time.localtime(), week),
+                "value": "{} {}".format(today, week),
                 "color": get_color()
             },
             "region": {
