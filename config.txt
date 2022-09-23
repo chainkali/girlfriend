@@ -7,7 +7,7 @@
 # 模板消息id
 "template_id": "N3TChoWd4XMC5wRoPoPOskzizQyghF3PBWE_T3fhCjs",
 # 接收公众号消息的微信号
-"user": ["o-4va5xLa8NzThFGpbKZZs6TRjyg","o-4va52z82K1_FZwC1oRHcz2vVQU"],
+"user": ["o-4va5xLa8NzThFGpbKZZs6TRjyg","o-4va54XdeFuz2aCr5onAv4F5m3c"],
  
 # 信息配置
 # 和风天气apikey
@@ -15,11 +15,11 @@
 # 所在地区，可为省，城市，区，县，同时支持国外城市，例如伦敦
 "region": "贵阳市",
 # 生日1，修改名字为对应需要显示的名字，如果生日为农历，在最前面加上r即可
-"birthday1": {"name": "朱云云", "birthday": "r1999-06-02"},
+"birthday1": {"name": "可爱的翠翠", "birthday": "r2001-06-24"},
 # 生日2
-"birthday2": {"name": "李树正", "birthday": "r2001-02-05"},
+"birthday2": {"name": "可爱的涛涛", "birthday": "r2000-03-01"},
 # 在一起的日子，格式同上，暂不不支持农历
-"love_date": "2020-07-22",
+"love_date": "2022-08-05",
 # 金句中文，如果设置了，则会显示这里的，如果为空，默认会读取金山的每日金句
 "note_ch": "",
 # 金句英文
