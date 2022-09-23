@@ -122,10 +122,10 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     month = localtime().tm_mon
     day = localtime().tm_mday
     hour=localtime().tm_hour
-    tmin=localtime().tm_min
+    minute=localtime().tm_min
     sec=localtime().tm_sec
     
-    today = datetime.date(datetime(year=year, month=month, day=day,hour=hour,min=tmin,sec=sec))
+    today = datetime.date(datetime(year=year, month=month, day=day,hour=hour,minute=minute,sec=sec))
     #today = datetime.date(datetime(year=year, month=month, day=day))
     week = week_list[today.isoweekday() % 7]
     # 获取在一起的日子的日期格式
