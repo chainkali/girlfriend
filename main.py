@@ -5,7 +5,6 @@ from datetime import datetime, date
 from zhdate import ZhDate
 import sys
 import os
-import time
  
  
 def get_color():
@@ -60,6 +59,36 @@ def get_weather(region):
     # 风向
     wind_dir = response["now"]["windDir"]
     return weather, temp, wind_dir
+    
+    
+def get_weather2(region2):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    }
+    key = config["weather_key"]
+    region_url = "https://geoapi.qweather.com/v2/city/lookup?location={}&key={}".format(region2, key)
+    response = get(region_url, headers=headers).json()
+    if response["code"] == "404":
+        print("推送消息失败，请检查地区名是否有误！")
+        os.system("pause")
+        sys.exit(1)
+    elif response["code"] == "401":
+        print("推送消息失败，请检查和风天气key是否正确！")
+        os.system("pause")
+        sys.exit(1)
+    else:
+        # 获取地区的location--id
+        location_id = response["location"][0]["id"]
+    weather_url = "https://devapi.qweather.com/v7/weather/now?location={}&key={}".format(location_id, key)
+    response = get(weather_url, headers=headers).json()
+    # 天气
+    weather2 = response["now"]["text"]
+    # 当前温度
+    temp2 = response["now"]["temp"] + u"\N{DEGREE SIGN}" + "C"
+    # 风向
+    wind_dir2 = response["now"]["windDir"]
+    return weather2, temp2, wind_dir2
  
  
 def get_birthday(birthday, year, today):
@@ -116,18 +145,17 @@ def get_ciba():
     return note_ch, note_en
  
  
-def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en):
+def send_message(to_user, access_token, region_name, weather, temp, wind_dir,region_name2, weather2, temp2, wind_dir2, note_ch, note_en):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
     month = localtime().tm_mon
     day = localtime().tm_mday
     hour=localtime().tm_hour
-    minute=localtime().tm_min
-    microsecond=localtime().tm_sec
+    minn=localtime().tm_min
+    sec=localtime().tm_sec
     
-    #today = datetime.date(datetime(year=year, month=month, day=day,hour=hour,minute=minute,microsecond=microsecond))
-    today = datetime.date(datetime(year=year, month=month, day=day))
+    today = datetime.date(datetime(year=year, month=month, day=day,hour=hour,minn=minn,sec=sec))
     week = week_list[today.isoweekday() % 7]
     # 获取在一起的日子的日期格式
     love_year = int(config["love_date"].split("-")[0])
@@ -167,6 +195,23 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
                 "value": wind_dir,
                 "color": get_color()
             },
+            "region2": {
+                "value": region_name2,
+                "color": get_color()
+            },
+            "weather2": {
+                "value": weather,
+                "color": get_color()
+            },
+            "temp2": {
+                "value": temp,
+                "color": get_color()
+            },
+            "wind_dir2": {
+                "value": wind_dir,
+                "color": get_color()
+            },
+            
             "love_day": {
                 "value": love_days,
                 "color": get_color()
@@ -235,5 +280,5 @@ if __name__ == "__main__":
         note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, region, weather, temp, wind_dir, note_ch, note_en)
+        send_message(user, accessToken, region, weather, temp, wind_dir,region2,weather2, temp2, wind_dir2 note_ch, note_en)
     os.system("pause")
