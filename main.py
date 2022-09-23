@@ -124,6 +124,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     hour=localtime().tm_hour
     minute=localtime().tm_min
     microsecond=localtime().tm_sec
+    Date date = new Date();
     
     today = datetime.date(datetime(year=year, month=month, day=day,hour=hour,minute=minute,microsecond=microsecond))
     #today = datetime.date(datetime(year=year, month=month, day=day))
@@ -147,7 +148,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         "topcolor": "#FF0000",
         "data": {
             "date": {
-                "value": "{} {}".format(today, week),
+                "value": "{} {}".format({"%tF%n",date}, week),
                 "color": get_color()
             },
             "region": {
