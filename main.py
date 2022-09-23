@@ -67,7 +67,7 @@ def get_weather2(region2):
                       'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
     }
     key = config["weather_key"]
-    region_url = "https://geoapi.qweather.com/v2/city/lookup?location={}&key={}".format(region2, key)
+    region_url = "https://geoapi.qweather.com/v2/city/lookup?location={}&key={}".format(region, key)
     response = get(region_url, headers=headers).json()
     if response["code"] == "404":
         print("推送消息失败，请检查地区名是否有误！")
@@ -83,7 +83,7 @@ def get_weather2(region2):
     weather_url = "https://devapi.qweather.com/v7/weather/now?location={}&key={}".format(location_id, key)
     response = get(weather_url, headers=headers).json()
     # 天气
-    weather2 = response["now"]["text"]
+    weather = response["now"]["text"]
     # 当前温度
     temp2 = response["now"]["temp"] + u"\N{DEGREE SIGN}" + "C"
     # 风向
@@ -195,20 +195,23 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir,reg
                 "value": wind_dir,
                 "color": get_color()
             },
+            
+            
+            #*****************************
             "region2": {
                 "value": region_name2,
                 "color": get_color()
             },
             "weather2": {
-                "value": weather,
+                "value": weather2,
                 "color": get_color()
             },
             "temp2": {
-                "value": temp,
+                "value": temp2,
                 "color": get_color()
             },
             "wind_dir2": {
-                "value": wind_dir,
+                "value": wind_dir2,
                 "color": get_color()
             },
             
@@ -272,7 +275,10 @@ if __name__ == "__main__":
     users = config["user"]
     # 传入地区获取天气信息
     region = config["region"]
+    region2 =config["region2"]
     weather, temp, wind_dir = get_weather(region)
+    weather2, temp2, wind_dir2 = get_weather(region2)
+    
     note_ch = config["note_ch"]
     note_en = config["note_en"]
     if note_ch == "" and note_en == "":
